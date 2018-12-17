@@ -1,4 +1,4 @@
-package ru.clientserverapps.mirea.serverbackend.domain;
+package ru.clientserverapps.mirea.serverbackend.models;
 
 import java.util.ArrayList;
 import java.util.List;

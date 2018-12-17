@@ -1,17 +1,13 @@
 package ru.clientserverapps.mirea.serverbackend;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.clientserverapps.mirea.serverbackend.domain.Pet;
+import ru.clientserverapps.mirea.serverbackend.models.Pet;
 
 import java.math.BigDecimal;
 
 public class PetWrapper {
     public int getId() {
         return id;
-    }
-
-    public int getInternalID() {
-        return internalID;
     }
 
     public int getCount() {
@@ -32,8 +28,7 @@ public class PetWrapper {
     PetWrapper(Pet instance)
     {
         this.id = instance.getId();
-        this.internalID = instance.getInternalID();
         this.count = instance.getCount();
-        this.price = instance.getPrice();
+        this.price = new BigDecimal(instance.getPrice());
     }
 }
