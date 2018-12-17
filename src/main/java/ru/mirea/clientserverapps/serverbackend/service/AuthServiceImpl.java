@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ru.mirea.clientserverapps.serverbackend.dao.UserDAO;
+import ru.mirea.clientserverapps.serverbackend.exceptions.TokenOutOfDateException;
 import ru.mirea.clientserverapps.serverbackend.models.Token;
 import ru.mirea.clientserverapps.serverbackend.models.User;
 
@@ -41,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
         if (user == null)
             return "No user registered with this Name";
         String hashed = Hashing.sha256().hashString(user.getHash() + salt, StandardCharsets.UTF_8).toString();
-        if (hashed == hash) {
+        if (hashed.equals(hash)) {
             String accessToken = authHelper.createJWT(user, ACCESS_TOKEN_DURATION);
             String refreshToken = authHelper.createJWT(user, REFRESH_TOKEN_DURATION);
             return accessToken + " " + refreshToken;
@@ -50,18 +51,18 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User checkToken(String AToken){
+    public User checkToken(String AToken) throws TokenOutOfDateException{
         Token t = authHelper.verifyToken(AToken);
         if (t == null)
             return null;
         // uhm... yeah, time's a bit tricky. hope this monster works
-        if (t.getExpires().isBefore(new DateTime(new org.joda.time.Instant(Calendar.getInstance().getTimeInMillis()))))
-            return null;
+        if (t.getExpires().isAfter(new DateTime(new org.joda.time.Instant(Calendar.getInstance().getTimeInMillis()))))
+            throw new TokenOutOfDateException();
         return userDAO.getUser(t.getUserId());
     }
 
     @Override
-    public String refreshToken(String RToken) {
+    public String refreshToken(String RToken) throws TokenOutOfDateException {
         Token t = authHelper.verifyToken(RToken);
         if (t == null)
             return "Refresh token is invalid";
