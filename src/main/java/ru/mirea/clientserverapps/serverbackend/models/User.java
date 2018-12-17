@@ -13,19 +13,11 @@ public class User {
     private BigDecimal balance;
     private String hash;
 
-    @JsonIgnore
-    private User user;
-
-    @JsonIgnore
-    @Autowired
-    private UserDAO userDAO;
-
     public User(int userID, String name, String balance, String hash) {
         this.userID = userID;
         this.name = name;
         this.balance = new BigDecimal(balance);
         this.hash = hash;
-        this.user = this.userDAO.getUser(this.userID);
     }
 
     public void setUserID(int userID) {

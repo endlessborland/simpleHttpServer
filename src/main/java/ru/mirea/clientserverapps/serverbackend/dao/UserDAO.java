@@ -25,7 +25,7 @@ public class UserDAO extends JdbcDaoSupport {
 
     public void addUser(String name, BigDecimal balance, String Hash)
     {
-        this.getJdbcTemplate().update("INSERT INTO users (column2, column3, column4) VALUES (?, ?, ?)",
+        this.getJdbcTemplate().update("INSERT INTO users (Name, Balance, Hash) VALUES (?, ?, ?)",
                 name, balance.toString(), Hash);
     }
 
@@ -45,7 +45,7 @@ public class UserDAO extends JdbcDaoSupport {
 
     // get User by Name
     public User getUser(String name) {
-        String sql = UserMapper.BASE_SQL + "where u.Name = ?";
+        String sql = UserMapper.BASE_SQL + " where u.Name = ?";
         Object[] params = new Object[] { name };
         UserMapper mapper = new UserMapper();
         try {
@@ -57,7 +57,7 @@ public class UserDAO extends JdbcDaoSupport {
     }
 
     public boolean doesUserExist(String name) {
-        String sql = UserMapper.BASE_SQL + "where u.Name = ?";
+        String sql = UserMapper.BASE_SQL + " where u.Name = ?";
         Object[] params = new Object[] { name };
         UserMapper mapper = new UserMapper();
         try {

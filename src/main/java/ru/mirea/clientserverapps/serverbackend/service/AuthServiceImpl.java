@@ -1,6 +1,7 @@
 package ru.mirea.clientserverapps.serverbackend.service;
 
 import com.google.common.hash.Hashing;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import ru.mirea.clientserverapps.serverbackend.models.User;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 
 
 @Service
@@ -52,11 +54,20 @@ public class AuthServiceImpl implements AuthService {
         Token t = authHelper.verifyToken(AToken);
         if (t == null)
             return null;
+        // uhm... yeah, time's a bit tricky. hope this monster works
+        if (t.getExpires().isBefore(new DateTime(new org.joda.time.Instant(Calendar.getInstance().getTimeInMillis()))))
+            return null;
         return userDAO.getUser(t.getUserId());
     }
 
     @Override
     public String refreshToken(String RToken) {
-        return null;
+        Token t = authHelper.verifyToken(RToken);
+        if (t == null)
+            return "Refresh token is invalid";
+        User user = this.userDAO.getUser(t.getUserId());
+        String accessToken = authHelper.createJWT(user, ACCESS_TOKEN_DURATION);
+        String refreshToken = authHelper.createJWT(user, REFRESH_TOKEN_DURATION);
+        return accessToken + " " + refreshToken;
     }
 }
