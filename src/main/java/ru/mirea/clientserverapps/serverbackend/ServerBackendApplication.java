@@ -1,8 +1,7 @@
-package ru.clientserverapps.mirea.serverbackend;
+package ru.mirea.clientserverapps.serverbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class ServerBackendApplication {

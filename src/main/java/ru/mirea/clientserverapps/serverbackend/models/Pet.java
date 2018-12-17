@@ -1,4 +1,4 @@
-package ru.clientserverapps.mirea.serverbackend.models;
+package ru.mirea.clientserverapps.serverbackend.models;
 
 import java.math.BigDecimal;
 

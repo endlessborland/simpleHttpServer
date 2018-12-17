@@ -1,8 +1,8 @@
-package ru.clientserverapps.mirea.serverbackend;
+package ru.mirea.clientserverapps.serverbackend;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.clientserverapps.mirea.serverbackend.models.Product;
+import ru.mirea.clientserverapps.serverbackend.models.Product;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

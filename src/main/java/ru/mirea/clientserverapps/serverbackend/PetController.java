@@ -1,11 +1,11 @@
-package ru.clientserverapps.mirea.serverbackend;
+package ru.mirea.clientserverapps.serverbackend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ru.clientserverapps.mirea.serverbackend.dao.PetDAO;
-import ru.clientserverapps.mirea.serverbackend.models.Pet;
+import ru.mirea.clientserverapps.serverbackend.dao.PetDAO;
+import ru.mirea.clientserverapps.serverbackend.models.Pet;
 
 import java.util.ArrayList;
 import java.util.List;

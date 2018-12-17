@@ -1,12 +1,12 @@
-package ru.clientserverapps.mirea.serverbackend.dao;
+package ru.mirea.clientserverapps.serverbackend.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.clientserverapps.mirea.serverbackend.models.Pet;
-import ru.clientserverapps.mirea.serverbackend.mappers.PetMapper;
+import ru.mirea.clientserverapps.serverbackend.models.Pet;
+import ru.mirea.clientserverapps.serverbackend.mappers.PetMapper;
 
 import javax.sql.DataSource;
 

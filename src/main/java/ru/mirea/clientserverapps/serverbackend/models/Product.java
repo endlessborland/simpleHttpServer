@@ -1,4 +1,4 @@
-package ru.clientserverapps.mirea.serverbackend.models;
+package ru.mirea.clientserverapps.serverbackend.models;
 
 import java.math.BigDecimal;
 
@@ -6,7 +6,7 @@ public class Product {
 
     protected BigDecimal price;
     protected int count;
-    int id;
+    protected int id;
 
     public void setPrice(String price) {
         this.price = new BigDecimal(price);

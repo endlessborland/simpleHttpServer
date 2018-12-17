@@ -1,8 +1,9 @@
-package ru.clientserverapps.mirea.serverbackend.mappers;
+package ru.mirea.clientserverapps.serverbackend.mappers;
 
-import ru.clientserverapps.mirea.serverbackend.models.Pet;
+import ru.mirea.clientserverapps.serverbackend.models.Pet;
 
 import org.springframework.jdbc.core.RowMapper;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

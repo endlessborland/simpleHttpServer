@@ -1,7 +1,7 @@
-package ru.clientserverapps.mirea.serverbackend;
+package ru.mirea.clientserverapps.serverbackend;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.clientserverapps.mirea.serverbackend.models.Pet;
+import ru.mirea.clientserverapps.serverbackend.models.Pet;
 
 import java.math.BigDecimal;
 
