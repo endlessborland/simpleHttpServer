@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMapper implements RowMapper<User> {
-    public static final String BASE_SQL = "Select u.ID, u.Name, u.Balance, u.Hash from users u";
+    public static final String BASE_SQL = "Select u.ID, u.Name, u.Balance, u.Hash, u.Tray from users u";
 
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new User(rs.getInt("ID"), rs.getString("Name"), rs.getString("Balance"),
-                rs.getString("Hash"));
+                rs.getString("Hash"), rs.getString("Tray"));
     }
 }

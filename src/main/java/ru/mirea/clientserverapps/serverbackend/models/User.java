@@ -12,12 +12,22 @@ public class User {
     private String name;
     private BigDecimal balance;
     private String hash;
+    private String tray;
 
-    public User(int userID, String name, String balance, String hash) {
+    public User(int userID, String name, String balance, String hash, String tray) {
         this.userID = userID;
         this.name = name;
         this.balance = new BigDecimal(balance);
         this.hash = hash;
+        this.tray = tray;
+    }
+
+    public void setTray(String tray) {
+        this.tray = tray;
+    }
+
+    public String getTray() {
+        return tray;
     }
 
     public void setUserID(int userID) {
@@ -37,7 +47,6 @@ public class User {
     }
 
     public int getUserID() {
-
         return userID;
     }
 

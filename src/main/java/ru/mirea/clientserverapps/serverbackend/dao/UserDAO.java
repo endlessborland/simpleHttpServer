@@ -25,8 +25,8 @@ public class UserDAO extends JdbcDaoSupport {
 
     public void addUser(String name, BigDecimal balance, String Hash)
     {
-        this.getJdbcTemplate().update("INSERT INTO users (Name, Balance, Hash) VALUES (?, ?, ?)",
-                name, balance.toString(), Hash);
+        this.getJdbcTemplate().update("INSERT INTO users (Name, Balance, Hash, Tray) VALUES (?, ?, ?, ?)",
+                name, balance.toString(), Hash, "tray" + name);
     }
 
     // get User by ID

@@ -1,5 +1,7 @@
 package ru.mirea.clientserverapps.serverbackend.models;
 
+import ru.mirea.clientserverapps.serverbackend.ItemType;
+
 import java.math.BigDecimal;
 
 public class Pet extends Product{
@@ -7,13 +9,14 @@ public class Pet extends Product{
     String info;
     String additionalInfo;
 
-    public Pet(int id, int count, String type, String info, String additionalInfo, String price) {
+    public Pet(int id, int count, String type, String info, String additionalInfo, String price, ItemType itemType) {
         this.id = id;
         this.count = count;
         this.type = type;
         this.info = info;
         this.price = new BigDecimal(price);
         this.additionalInfo = additionalInfo;
+        this.itemType = ItemType.TypePet;
     }
 
     public String getType() {

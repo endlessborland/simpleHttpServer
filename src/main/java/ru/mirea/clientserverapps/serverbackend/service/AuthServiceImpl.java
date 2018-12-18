@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ru.mirea.clientserverapps.serverbackend.dao.TrayDAO;
 import ru.mirea.clientserverapps.serverbackend.dao.UserDAO;
 import ru.mirea.clientserverapps.serverbackend.exceptions.TokenOutOfDateException;
 import ru.mirea.clientserverapps.serverbackend.models.Token;
@@ -28,14 +29,21 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     AuthHelper authHelper;
 
+    @Autowired
+    TrayDAO trayDAO;
+
     @Override
     public boolean registerUser(String name, String balance, String hash) {
         if (userDAO.doesUserExist(name))
             return false;
         this.userDAO.addUser(name, new BigDecimal(balance), hash);
+        // register a tray for user
+        this.trayDAO.createTray(userDAO.getUser(name));
         return true;
     }
 
+
+    // creating a user
     @Override
     public String authUser(String hash, String salt, String name) {
         User user = userDAO.getUser(name);

@@ -27,7 +27,6 @@ public class Token {
     }
 
     public int getUserId() {
-
         return userId;
     }
 

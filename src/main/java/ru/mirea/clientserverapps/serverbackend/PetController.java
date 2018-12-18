@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import ru.mirea.clientserverapps.serverbackend.dao.PetDAO;
+import ru.mirea.clientserverapps.serverbackend.exceptions.IDNotFoundException;
 import ru.mirea.clientserverapps.serverbackend.models.Pet;
+import ru.mirea.clientserverapps.serverbackend.models.PetWrapper;
+import ru.mirea.clientserverapps.serverbackend.service.AuthService;
+import ru.mirea.clientserverapps.serverbackend.service.PetService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +17,16 @@ import java.util.List;
 public class PetController {
 
     @Autowired
-    private PetDAO petDAO;
+    private PetService petService;
+
+    @Autowired
+    private AuthService authService;
 
     @RequestMapping(value = "pet", method = RequestMethod.GET)
     @ResponseBody
     public List<PetWrapper> pets()
     {
-        return new ArrayList<>();
+        return petService.getPets();
     }
 
     @RequestMapping(value = "pet/{id}", method = RequestMethod.GET)
@@ -28,12 +34,17 @@ public class PetController {
     @Transactional
     public Pet pet(@PathVariable int id)
     {
-        return this.petDAO.getPet(id);
+        try {
+            return petService.getPet(id);
+        } catch (IDNotFoundException e)
+        {
+            return null;
+        }
     }
 
     @RequestMapping(value = "pet/{id}/buy", method = RequestMethod.GET)
     @ResponseBody
-    public void buyPet(@PathVariable int id)
+    public void buyPet(@PathVariable int id, @RequestParam("token") String token)
     {
 
     }

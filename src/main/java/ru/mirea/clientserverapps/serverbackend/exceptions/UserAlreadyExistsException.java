@@ -2,6 +2,7 @@ package ru.mirea.clientserverapps.serverbackend.exceptions;
 
 public class UserAlreadyExistsException extends Exception {
     public UserAlreadyExistsException() {
+        super();
     }
 
     public String toString() {
