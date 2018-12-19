@@ -1,4 +1,4 @@
-package ru.mirea.clientserverapps.serverbackend;
+package ru.mirea.clientserverapps.serverbackend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.mirea.clientserverapps.serverbackend.exceptions.IDNotFoundException;
 import ru.mirea.clientserverapps.serverbackend.models.Pet;
 import ru.mirea.clientserverapps.serverbackend.models.PetWrapper;
-import ru.mirea.clientserverapps.serverbackend.service.AuthService;
-import ru.mirea.clientserverapps.serverbackend.service.PetService;
+import ru.mirea.clientserverapps.serverbackend.services.AuthService;
+import ru.mirea.clientserverapps.serverbackend.services.PetService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

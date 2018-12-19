@@ -1,4 +1,4 @@
-package ru.mirea.clientserverapps.serverbackend.service;
+package ru.mirea.clientserverapps.serverbackend.services;
 
 import java.security.InvalidKeyException;
 import java.security.SignatureException;

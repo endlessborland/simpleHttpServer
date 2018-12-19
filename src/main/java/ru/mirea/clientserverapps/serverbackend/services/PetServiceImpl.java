@@ -1,4 +1,4 @@
-package ru.mirea.clientserverapps.serverbackend.service;
+package ru.mirea.clientserverapps.serverbackend.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

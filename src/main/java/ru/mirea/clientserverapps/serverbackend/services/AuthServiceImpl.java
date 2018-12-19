@@ -1,4 +1,4 @@
-package ru.mirea.clientserverapps.serverbackend.service;
+package ru.mirea.clientserverapps.serverbackend.services;
 
 import com.google.common.hash.Hashing;
 import org.joda.time.DateTime;

@@ -1,7 +1,6 @@
-package ru.mirea.clientserverapps.serverbackend;
+package ru.mirea.clientserverapps.serverbackend.controllers;
 
 
-import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,13 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.mirea.clientserverapps.serverbackend.exceptions.TokenOutOfDateException;
 import ru.mirea.clientserverapps.serverbackend.models.User;
-import ru.mirea.clientserverapps.serverbackend.service.AuthService;
-
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.hash.Hashing.sha256;
+import ru.mirea.clientserverapps.serverbackend.services.AuthService;
 
 @Controller
 public class AuthController {
@@ -24,6 +17,13 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
+    /**
+     * Registers user in the system
+     * @param name Unique username
+     * @param hash login:password hash. Unencrypted at the moment
+     * @param balance BigDecimal User's balance
+     * @return String success/fail message
+     */
     @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
     public String register(@RequestParam("name") String name, @RequestParam("hash") String hash, @RequestParam("balance") String balance)
@@ -33,6 +33,13 @@ public class AuthController {
         return "Register failed";
     }
 
+    /**
+     * Authenticates user in the system
+     * @param name Username
+     * @param hash Username's SHA256(SHA256(login:password) + salt)
+     * @param salt Salt
+     * @return Tokens of auth in a form of string: "authToken refreshToken"
+     */
     @RequestMapping(value = "auth", method = RequestMethod.GET)
     @ResponseBody
     public String auth(@RequestParam("name") String name, @RequestParam("hash") String hash, @RequestParam("salt") String salt)
@@ -40,6 +47,11 @@ public class AuthController {
         return this.authService.authUser(hash, salt, name);
     }
 
+    /**
+     * Refershes tokens
+     * @param rToken Refresh token
+     * @return Tokens of auth in a form of string: "authToken refreshToken"
+     */
     @RequestMapping(value = "refresh", method = RequestMethod.GET)
     @ResponseBody
     public String refresh(@RequestParam("rtoken") String rToken)

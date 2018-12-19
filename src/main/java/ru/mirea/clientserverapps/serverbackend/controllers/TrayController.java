@@ -1,4 +1,4 @@
-package ru.mirea.clientserverapps.serverbackend;
+package ru.mirea.clientserverapps.serverbackend.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

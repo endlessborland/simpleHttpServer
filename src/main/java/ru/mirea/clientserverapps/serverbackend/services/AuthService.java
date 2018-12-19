@@ -1,4 +1,4 @@
-package ru.mirea.clientserverapps.serverbackend.service;
+package ru.mirea.clientserverapps.serverbackend.services;
 
 import ru.mirea.clientserverapps.serverbackend.exceptions.TokenOutOfDateException;
 import ru.mirea.clientserverapps.serverbackend.models.User;
