@@ -2,7 +2,6 @@ package ru.mirea.clientserverapps.serverbackend.services;
 
 import ru.mirea.clientserverapps.serverbackend.exceptions.IDNotFoundException;
 import ru.mirea.clientserverapps.serverbackend.exceptions.NotEnoughInstancesException;
-import ru.mirea.clientserverapps.serverbackend.models.Product;
 import ru.mirea.clientserverapps.serverbackend.models.ProductTrayWrapper;
 import ru.mirea.clientserverapps.serverbackend.models.User;
 

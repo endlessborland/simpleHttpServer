@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ru.mirea.clientserverapps.serverbackend.enums.StatusType;
+import ru.mirea.clientserverapps.serverbackend.exceptions.AuthFailedException;
 import ru.mirea.clientserverapps.serverbackend.exceptions.TokenOutOfDateException;
+import ru.mirea.clientserverapps.serverbackend.exceptions.UserAlreadyExistsException;
+import ru.mirea.clientserverapps.serverbackend.models.Response;
 import ru.mirea.clientserverapps.serverbackend.models.User;
 import ru.mirea.clientserverapps.serverbackend.services.AuthService;
 
@@ -26,11 +30,15 @@ public class AuthController {
      */
     @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
-    public String register(@RequestParam("name") String name, @RequestParam("hash") String hash, @RequestParam("balance") String balance)
+    public Response register(@RequestParam("name") String name, @RequestParam("hash") String hash, @RequestParam("balance") String balance)
     {
-        if (authService.registerUser(name, balance, hash))
-            return "Register successfull";
-        return "Register failed";
+        try {
+            authService.registerUser(name, balance, hash);
+            return new Response(StatusType.OK, null);
+        } catch (UserAlreadyExistsException e) {
+            return new Response(StatusType.FAIL, e.toString());
+        }
+
     }
 
     /**
@@ -42,9 +50,13 @@ public class AuthController {
      */
     @RequestMapping(value = "auth", method = RequestMethod.GET)
     @ResponseBody
-    public String auth(@RequestParam("name") String name, @RequestParam("hash") String hash, @RequestParam("salt") String salt)
+    public Response auth(@RequestParam("name") String name, @RequestParam("hash") String hash, @RequestParam("salt") String salt)
     {
-        return this.authService.authUser(hash, salt, name);
+        try {
+            return new Response(StatusType.OK, authService.authUser(hash, salt, name));
+        } catch (AuthFailedException e) {
+            return new Response(StatusType.FAIL, e.toString());
+        }
     }
 
     /**
@@ -54,15 +66,15 @@ public class AuthController {
      */
     @RequestMapping(value = "refresh", method = RequestMethod.GET)
     @ResponseBody
-    public String refresh(@RequestParam("rtoken") String rToken)
+    public Response refresh(@RequestParam("rtoken") String rToken)
     {
         try {
             User user = authService.checkToken(rToken);
-            if (user == null)
-                return "Token invalid";
-            return this.authService.refreshToken(rToken);
+            return new Response(StatusType.OK, authService.refreshToken(rToken));
         } catch (TokenOutOfDateException e) {
-            return "Please authenticate";
+            return new Response(StatusType.FAIL, e.toString());
+        } catch (AuthFailedException e) {
+            return new Response(StatusType.FAIL, e.toString());
         }
     }
 }

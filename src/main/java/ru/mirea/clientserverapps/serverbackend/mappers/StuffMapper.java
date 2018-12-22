@@ -1,8 +1,5 @@
 package ru.mirea.clientserverapps.serverbackend.mappers;
 
-import ru.mirea.clientserverapps.serverbackend.enums.ItemType;
-import ru.mirea.clientserverapps.serverbackend.models.Pet;
-
 import org.springframework.jdbc.core.RowMapper;
 import ru.mirea.clientserverapps.serverbackend.models.Stuff;
 
