@@ -1,6 +1,6 @@
 package ru.mirea.clientserverapps.serverbackend.models;
 
-import ru.mirea.clientserverapps.serverbackend.ItemType;
+import ru.mirea.clientserverapps.serverbackend.enums.ItemType;
 
 import java.math.BigDecimal;
 

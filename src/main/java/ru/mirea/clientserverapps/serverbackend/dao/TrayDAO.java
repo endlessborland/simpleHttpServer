@@ -4,6 +4,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.mirea.clientserverapps.serverbackend.exceptions.IDNotFoundException;
 import ru.mirea.clientserverapps.serverbackend.mappers.ProductTrayWrapperMapper;
 import ru.mirea.clientserverapps.serverbackend.models.ProductTrayWrapper;
 import ru.mirea.clientserverapps.serverbackend.models.User;
@@ -49,9 +50,56 @@ public class TrayDAO extends JdbcDaoSupport {
                 productTrayWrapper.getItemType());
     }
 
-    public void removeFromCart(User user, int id)
+    public boolean isInCart(User user, ProductTrayWrapper productTrayWrapper)
+    {
+        String sql = ProductTrayWrapperMapper.BASE_SQL + user.getTray() + " where ProductID = ? AND ItemType = ?";
+        Object[] params = new Object[] { productTrayWrapper.getProductID(), productTrayWrapper.getItemType() };
+        ProductTrayWrapperMapper mapper = new ProductTrayWrapperMapper();
+        try {
+            productTrayWrapper = this.getJdbcTemplate().queryForObject(sql, params, mapper);
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+
+    public void alterProductAmount(User user, ProductTrayWrapper productTrayWrapper)
+    {
+        this.getJdbcTemplate().update("UPDATE " + user.getTray() + " SET Count = "
+                + (int)(this.getCartItemAmount(user, productTrayWrapper) + productTrayWrapper.getCount())
+                + " where ProductID = " + productTrayWrapper.getProductID() +
+            " AND ItemType = '" + productTrayWrapper.getItemType() + "'");
+    }
+
+    private int getCartItemAmount(User user, ProductTrayWrapper productTrayWrapper)
+    {
+        String sql = ProductTrayWrapperMapper.BASE_SQL + user.getTray() + " where ProductID = ? AND ItemType = ?";
+        Object[] params = new Object[] { productTrayWrapper.getProductID(), productTrayWrapper.getItemType() };
+        ProductTrayWrapperMapper mapper = new ProductTrayWrapperMapper();
+        try {
+            productTrayWrapper = this.getJdbcTemplate().queryForObject(sql, params, mapper);
+            return productTrayWrapper.getCount();
+        } catch (EmptyResultDataAccessException e) {
+            return 0;
+        }
+    }
+
+    public void removeFromCart(User user, int id) throws IDNotFoundException
     {
         String sql = "DELETE FROM " + user.getTray() + " WHERE ID=" + id;
         this.getJdbcTemplate().update(sql);
+    }
+
+    public ProductTrayWrapper getItem(User user, int id) throws IDNotFoundException
+    {
+        String sql = ProductTrayWrapperMapper.BASE_SQL + user.getTray() + " where ID = ?";
+        Object[] params = new Object[] { id };
+        ProductTrayWrapperMapper mapper = new ProductTrayWrapperMapper();
+        try {
+            ProductTrayWrapper productTrayWrapper = this.getJdbcTemplate().queryForObject(sql, params, mapper);
+            return productTrayWrapper;
+        } catch (EmptyResultDataAccessException e) {
+            throw new IDNotFoundException(id);
+        }
     }
 }

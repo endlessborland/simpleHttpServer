@@ -68,6 +68,12 @@ public class UserDAO extends JdbcDaoSupport {
         }
     }
 
+    public void alterBalance(User user, String newBalance)
+    {
+        this.getJdbcTemplate().update("UPDATE users SET Balance = "
+                + newBalance.toString()
+                + " where ID = " + user.getUserID());
+    }
 
 
 }

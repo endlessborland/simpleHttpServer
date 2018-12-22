@@ -1,7 +1,7 @@
 package ru.mirea.clientserverapps.serverbackend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.mirea.clientserverapps.serverbackend.ItemType;
+import ru.mirea.clientserverapps.serverbackend.enums.ItemType;
 
 import java.math.BigDecimal;
 

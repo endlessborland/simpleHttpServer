@@ -5,17 +5,14 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.mirea.clientserverapps.serverbackend.exceptions.IDNotFoundException;
+import ru.mirea.clientserverapps.serverbackend.mappers.PetMapper;
 import ru.mirea.clientserverapps.serverbackend.mappers.PetWrapperMapper;
 import ru.mirea.clientserverapps.serverbackend.models.Pet;
-import ru.mirea.clientserverapps.serverbackend.mappers.PetMapper;
 import ru.mirea.clientserverapps.serverbackend.models.PetWrapper;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.List;
 
-import static ru.mirea.clientserverapps.serverbackend.mappers.PetWrapperMapper.BASE_SQL;
 
 @Repository
 @Transactional

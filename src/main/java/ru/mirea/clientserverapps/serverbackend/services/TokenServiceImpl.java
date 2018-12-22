@@ -24,7 +24,7 @@ import ru.mirea.clientserverapps.serverbackend.models.Token;
 import ru.mirea.clientserverapps.serverbackend.models.User;
 
 @Component
-public class AuthHelper {
+public class TokenServiceImpl implements TokenService {
 
     private static final String ISSUER = "ru.mirea.ksp.ds";
     private static final String SIGNING_KEY = "kjhkjsdhf^%76*&^usadhkjasd";
@@ -38,6 +38,7 @@ public class AuthHelper {
      * @param durationDays
      * @return
      */
+    @Override
     public String createJWT(User user, long durationDays) throws RuntimeException
     {
         //Current time and signing algorithm
@@ -67,6 +68,7 @@ public class AuthHelper {
         }
     }
 
+    @Override
     public Token verifyToken(String token)
     {
         try {

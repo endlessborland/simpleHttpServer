@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     UserDAO userDAO;
 
     @Autowired
-    AuthHelper authHelper;
+    TokenService tokenService;
 
     @Autowired
     TrayDAO trayDAO;
@@ -51,8 +51,8 @@ public class AuthServiceImpl implements AuthService {
             return "No user registered with this Name";
         String hashed = Hashing.sha256().hashString(user.getHash() + salt, StandardCharsets.UTF_8).toString();
         if (hashed.equals(hash)) {
-            String accessToken = authHelper.createJWT(user, ACCESS_TOKEN_DURATION);
-            String refreshToken = authHelper.createJWT(user, REFRESH_TOKEN_DURATION);
+            String accessToken = tokenService.createJWT(user, ACCESS_TOKEN_DURATION);
+            String refreshToken = tokenService.createJWT(user, REFRESH_TOKEN_DURATION);
             return accessToken + " " + refreshToken;
         }
         return null;
@@ -60,7 +60,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User checkToken(String AToken) throws TokenOutOfDateException{
-        Token t = authHelper.verifyToken(AToken);
+        Token t = tokenService.verifyToken(AToken);
         if (t == null)
             return null;
         // uhm... yeah, time's a bit tricky. hope this monster works
@@ -71,12 +71,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String refreshToken(String RToken) throws TokenOutOfDateException {
-        Token t = authHelper.verifyToken(RToken);
+        Token t = tokenService.verifyToken(RToken);
         if (t == null)
             return "Refresh token is invalid";
         User user = this.userDAO.getUser(t.getUserId());
-        String accessToken = authHelper.createJWT(user, ACCESS_TOKEN_DURATION);
-        String refreshToken = authHelper.createJWT(user, REFRESH_TOKEN_DURATION);
+        String accessToken = tokenService.createJWT(user, ACCESS_TOKEN_DURATION);
+        String refreshToken = tokenService.createJWT(user, REFRESH_TOKEN_DURATION);
         return accessToken + " " + refreshToken;
     }
 }
